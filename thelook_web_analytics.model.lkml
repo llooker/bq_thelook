@@ -1,10 +1,11 @@
-#connection: "bigquery_publicdata_standard_sql"
-connection: "docs_bigquery_db"
+connection: "bigquery_publicdata_standard_sql"
+#connection: "docs_bigquery_db"
 
 # include all the views
 include: "*.view"
 
 include: "*.explore"
+include: "order_items_search.layer"
 
 explore: event_sessions {
   extends: [user_joins]

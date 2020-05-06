@@ -10,6 +10,7 @@ view: users {
   dimension: first_name {}
   dimension: gender {}
   dimension: last_name {}
+  dimension: name {sql:${first_name} || ' ' || ${last_name} ;;}
   dimension: state {}
   dimension: zip {type: zipcode}
   measure: count {type:count
