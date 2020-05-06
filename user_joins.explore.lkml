@@ -9,8 +9,4 @@ explore: user_joins {
     sql: LEFT JOIN UNNEST(SPLIT(${user_order_facts.lifetime_brands},'|RECORD|')) as lifetime_brand ;;}
   join: lifetime_product_category { view_label:"Users"  relationship:one_to_many
     sql: LEFT JOIN UNNEST(SPLIT(${user_order_facts.lifetime_product_categories},'|RECORD|')) as lifetime_product_category ;;}
-  join: zip_demographics {relationship:many_to_one
-    sql_on: ${users.zip} =  ${zip_demographics.zip};;}
-  join: probability_male {relationship:many_to_one
-    sql_on: ${users.first_name} = UPPER(${probability_male.name}) ;;}
 }

@@ -1,10 +1,8 @@
-connection: "bigquery_publicdata_standard_sql"
+#connection: "bigquery_publicdata_standard_sql"
+connection: "docs_bigquery_db"
 
 # include all the views
 include: "*.view"
-
-# include all the dashboards
-include: "*.dashboard"
 
 include: "*.explore"
 
