@@ -3,7 +3,8 @@
 #
 
 include: "order_items.explore"
-include: "search.block"
+#include: "search.block"
+include: "//search_block/lib/search.block"
 
 explore: +order_items {
   #extends: [search_joins]   # extension not allowed in refinement!
@@ -19,7 +20,7 @@ view: +order_items {
     suggest_dimension: search_suggest.search_term
     suggest_explore: flights_search
     sql:
-       {%condition%} ${search_map.__search_term} {%endcondition%};;
+       {%condition%} ${search_map.search_term} {%endcondition%};;
   }
 }
 
@@ -32,7 +33,7 @@ view: +search_map {
   dimension: map {
     sql:
       [
-        STRUCT('products.brand' as __search_field, ${products.brand} as __search_value),
+        STRUCT('products.brand' as search_field, ${products.brand} as search_value),
         STRUCT('products.category', ${products.category}),
         STRUCT('products.name', ${products.name}),
         STRUCT('products.department', ${products.department}),
@@ -54,14 +55,20 @@ view: +search_suggest {
     persist_for: "24 hours"
     explore_source: order_items {
       column: search_value {
-        field: search_map.__search_value
+        field: search_map.search_value
       }
       column: search_weight {
-        field: search_map.__search_weight
+        field: search_map.search_weight
       }
       column: search_field {
-        field: search_map.__search_field
+        field: search_map.search_field
       }
+    }
+  }
+  measure: total_weight {
+    link: {
+      url: "order_items?f[{{search_field._value}}]={{search_value._value}}&fields=search_map.search_field,search_map.search_value,search_map.search_weight,search_map.tell_me_more"
+      label: "Tell Me More"
     }
   }
 }
