@@ -5,6 +5,7 @@
 include: "order_items.explore"
 #include: "search.block"
 include: "//search_block/lib/search.block"
+include: "//search_block/lib/search_bigquery.block"
 
 explore: +order_items {
   #extends: [search_joins]   # extension not allowed in refinement!
@@ -28,6 +29,15 @@ explore: order_items_search {
   extends: [search_suggest]
 }
 
+# the explore to build suggestions from...
+explore: build_suggest {
+  extends: [order_items]
+  from: order_items
+  view_name: order_items
+  hidden: yes
+}
+
+
 
 view: +search_map {
   dimension: map {
@@ -47,6 +57,7 @@ view: +search_map {
       ]
     ;;
   }
+  dimension: search_primary_key {sql: ${order_items.id};; }
 }
 
 # all this exists because we can't change the explore_source name, should be a query object.
