@@ -10,6 +10,8 @@ view: order_items {
   dimension: user_id {type: number}
 
   measure: count {type:count drill_fields: [id, created_date, user_id, sale_price]}
+  measure: invoice_count {label:"Invoices sent" sql:${order_id} ;; type:count_distinct}
+  measure: sales_made {label:"Sales made" sql:${order_id} ;; type:count_distinct}
   measure: total_revenue {type:sum sql: ${sale_price} ;;}
   measure: order_count {type:count_distinct sql: ${order_id} ;; drill_fields: [order_id, count]}
 }
