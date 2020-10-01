@@ -5,6 +5,7 @@ include: "distribution_centers.view"
 include: "user_order_sequence.view"
 include: "order_items.view"
 include: "user_joins.explore"
+include: "orders.view"
 
 
 explore: order_items {
@@ -15,4 +16,8 @@ explore: order_items {
   join: distribution_centers {relationship:many_to_one  sql_on: ${products.distribution_center_id} = ${distribution_centers.id} ;;}
   join: user_order_sequence {view_label:"Order Items"  relationship: many_to_one
     sql_on: ${user_order_sequence.order_id} = ${order_items.order_id} ;;}
+  join: orders {
+    relationship:many_to_one
+    sql_on: ${order_items.order_id} = ${orders.id} ;;
+  }
 }
