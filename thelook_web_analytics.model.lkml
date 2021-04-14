@@ -5,7 +5,6 @@ connection: "bigquery_publicdata_standard_sql"
 include: "*.view"
 
 include: "*.explore"
-include: "order_items_search.layer"
 
 explore: event_sessions {
   extends: [user_joins]
